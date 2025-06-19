@@ -6,22 +6,22 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerMove))]
 public class PlayerAttack : MonoBehaviour
 {
-    [Header("Attack Settings")]
-    public KeyCode attackKey = KeyCode.J;
+    [Header("공격 설정")]
+    public KeyCode attackKey = KeyCode.J;   //  공격 키
     public float attackRate = 2f;
     public int attackDamage = 20;
 
-    [Header("Hit Detection")]
+    [Header("공격 방향")]
     public Transform attackPoint;
     public float attackRange = 0.5f;
     public LayerMask enemyLayers;
 
     private float _nextAttackTime = 0f;
-    private Animator _animator;
+    private Animator anim;
 
     private void Awake()
     {
-        _animator = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
     }
 
     private void Update()
@@ -37,7 +37,7 @@ public class PlayerAttack : MonoBehaviour
     void Attack()
     {
         // 1) 애니메이션 트리거
-        _animator.SetTrigger("Attack");
+        anim.SetTrigger("Attack");
 
         // 2) 공격 판정: attackPoint 위치 기준 원형 영역 내의 적 찾기
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
@@ -45,11 +45,11 @@ public class PlayerAttack : MonoBehaviour
         {
             // 적 스크립트에서 TakeDamage 메서드를 구현해야 합니다.
             // use tryGetComponent to avoid null reference exception
-            if (enemyCollider.TryGetComponent<Enemy>(out Enemy enemy))
+            if (enemyCollider.TryGetComponent<Enemy>(out Enemy enemy) && enemy != null)
             {
                 enemy.TakeDamage(attackDamage);
             }
-        }
+        }   
     }
 
     // 씬 뷰에서 공격 판정 범위 시각화
