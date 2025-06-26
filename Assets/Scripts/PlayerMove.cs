@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 public class PlayerMove : MonoBehaviour
 {
     [Header("이동 설정")]
-    public float moveSpeed = 5f;         // 좌우 이동 속도
+    public float moveSpeed = 10f;         // 좌우 이동 속도
 
     [Header("지면 체크")]
     public Transform groundCheck;        // 지면 체크용 위치 (플레이어 발 밑에 빈 GameObject)
@@ -36,6 +36,9 @@ public class PlayerMove : MonoBehaviour
         // 1) 좌우 이동
         float horiz = Input.GetAxisRaw("Horizontal");  // -1, 0, +1
         rb.linearVelocity = new Vector2(horiz * moveSpeed, rb.linearVelocity.y);
+        //rb.AddForce(Vector2.right * horiz * moveSpeed, ForceMode2D.Force);
+
+
         anim.SetBool("Walk", horiz != 0);
 
             Vector3 rot = transform.rotation.eulerAngles;

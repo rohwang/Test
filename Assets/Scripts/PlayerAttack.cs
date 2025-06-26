@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(PlayerMove))]
@@ -19,6 +20,22 @@ public class PlayerAttack : MonoBehaviour
     private float _nextAttackTime = 0f;
     private Animator anim;
 
+    public UnityEvent OnHpChanged;
+
+    [Header("체력 설정")]
+    public float MaxHp = 100;
+    public float CurHp = 100;
+
+    public float GetMaxHp()
+    {
+        return MaxHp;
+    }
+
+    public float GetCurHp()
+    {
+        return CurHp;
+    }
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -26,6 +43,12 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
+
+        if (CurHp <= 0)
+        {
+            Destroy(gameObject);
+        }
+
         // 공격 쿨다운 체크 및 입력 처리
         if (Time.time >= _nextAttackTime && Input.GetKeyDown(attackKey))
         {
@@ -49,7 +72,11 @@ public class PlayerAttack : MonoBehaviour
             {
                 enemy.TakeDamage(attackDamage);
             }
-        }   
+        }
+
+
+        // 가정
+        OnHpChanged.Invoke();
     }
 
     // 씬 뷰에서 공격 판정 범위 시각화
