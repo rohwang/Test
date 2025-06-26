@@ -13,13 +13,13 @@ public class PlayCinematic : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("플레이어 감지");
+            Debug.Log("오브젝트가 플레이어 감지");
             StartCoroutine(PlayCinematicAnimation());
         }
     }
     public IEnumerator PlayCinematicAnimation()
     {
-        Debug.Log("함수 발동");
+        Debug.Log("플레이시네마틱애니메이션 함수 발동");
         cinecamera.Priority = 9;
         yield return new WaitForSeconds(4f);
         cinecamera.Priority = 0;

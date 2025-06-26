@@ -40,7 +40,7 @@ public class Enemy : MonoBehaviour
 
     public void DealDamage() { // 체력 감소 공식
 
-        // 2) 공격 판정: attackPoint 위치 기준 원형 영역 내의 플레이어 찾기
+        // 1) 공격 판정: attackPoint 위치 기준 원형 영역 내의 플레이어 찾기
         Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, playerLayers);
         foreach (Collider2D playerCollider in hitPlayer)
         {
@@ -60,23 +60,27 @@ public class Enemy : MonoBehaviour
 
     public void FirstAttack()
     {
+        Debug.Log("1차 공격 발동");
         anim.SetTrigger(name = "Attack1");
         DealDamage();
     }
 
     public void SecondAttack()
     {
+        Debug.Log("2차 공격 발동");
         anim.SetTrigger(name = "Attack2");
         DealDamage();
     }
 
     public void SingleAtk()
     {
+        Debug.Log("싱글 공격 발동");
         FirstAttack();
     }
 
     public IEnumerator ComboCoroutine()
     {
+        Debug.Log("콤보 공격 코루틴 발동");
         FirstAttack();
         yield return new WaitForSeconds(1f);
         SecondAttack();
@@ -91,19 +95,23 @@ public class Enemy : MonoBehaviour
     {
         if (currentHealth <= 0) //  몹 사망 시
         {
+            Debug.Log("머쉬룸 사망");
             enemyMove.canMove = false;
         }
 
         if (Time.time >= _nextAttackTime && IsPlayerCloseEnough)
         {
+            Debug.Log("공격 조건 만족");
             enemyMove.canMove = false;
             attackType = Random.Range(0, 2);
             if (attackType == 0)
             {
+                Debug.Log("어택 타입 0");
                 SingleAtk();
             }
             else if (attackType == 1)
             {
+                Debug.Log("어택 타입 1");
                 ComboAtk();
             }
             _nextAttackTime = Time.time + 1f / attackRate;
