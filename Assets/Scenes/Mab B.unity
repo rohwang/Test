@@ -1190,6 +1190,8 @@ MonoBehaviour:
   canMove: 1
   player: {fileID: 791596967}
   transformplayer: {fileID: 791596967}
+  recognizedPlayer: 1
+  anim: {fileID: 850173262}
   moveSpeed: 3
 --- !u!95 &850173262
 Animator:

@@ -43,7 +43,6 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
-
         if (CurHp <= 0)
         {
             Destroy(gameObject);

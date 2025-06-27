@@ -8,9 +8,10 @@ public class Enemy : MonoBehaviour
 
     [Header("공격 설정")]
     private bool canAttack = false;
-    public float attackRate = 4f;
+    public float attackRate = 1f;
     public int attackDamage = 20;
     private int attackType = 0;
+    private float _nextAttackTime = 2f;
 
     [Header("공격 방향")]
     public Transform attackPoint;
@@ -26,7 +27,6 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private Animator anim;
 
-    private float _nextAttackTime = 2f;
 
     public PlayerAttack playeratk;
 
@@ -87,25 +87,11 @@ public class Enemy : MonoBehaviour
         StartCoroutine(ComboCoroutine());
     }
 
-    private void Update()
-    {   
-        if(enemyMove.canMove)
-        {
-            canAttack = false;
-        }
-
-        if (currentHealth <= 0) //  몹 사망 시
-        {
-            Debug.Log("머쉬룸 사망");
-            enemyMove.canMove = false;
-        }
-
-        CheckPlayerTransform();
-
+    public IEnumerator atk()
+    {
         if (Time.time >= _nextAttackTime && IsPlayerCloseEnough && canAttack)
         {
             Debug.Log("공격 조건 만족");
-
             enemyMove.canMove = false;
 
             attackType = Random.Range(0, 2);
@@ -120,8 +106,31 @@ public class Enemy : MonoBehaviour
                 ComboAtk();
             }
             _nextAttackTime = Time.time + 1f / attackRate;
-
+            yield return new WaitForSeconds(1f);
             enemyMove.canMove = true;
+        }
+
+    }
+
+    private void Update()
+    {
+
+        if (playeratk == null)
+        {
+            Debug.Log("대상이 존재하지 않습니다.");
+            return;     
+        }
+        if (currentHealth <= 0) //  몹 사망 시
+        {
+            Debug.Log("머쉬룸 사망");
+            enemyMove.canMove = false;
+        }
+
+        CheckPlayerTransform();
+
+        if(IsPlayerCloseEnough)
+        {
+            StartCoroutine(atk());
         }
     }
 

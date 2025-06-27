@@ -5,12 +5,16 @@ public class EnemyMove : MonoBehaviour
     public bool canMove = true;
 
     public Transform player;
-    public Transform transformplayer;
+    [SerializeField] private Animator anim;
 
-    [SerializeField] private bool recognizedPlayer; //  플레이어가 인식되었는가
-    private Animator anim;
+    [Header("인식 설정")]
+    public float recognizeDistance = 10;
+    private bool recognizedPlayer; //  플레이어가 인식되었는가
+
+
+    [Header("이동 설정")]
     public float moveSpeed = 1f;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
 
     private void Awake()
     {
@@ -39,7 +43,7 @@ public class EnemyMove : MonoBehaviour
     {
         float distance = (player.position - transform.position).magnitude;
 
-        if (distance < 10)    //  플레이어가 인식 범위 내에 있을 때를 체크함.
+        if (distance < recognizeDistance)    //  플레이어가 인식 범위 내에 있을 때를 체크함.
         {
             recognizedPlayer = true;
         }
@@ -69,5 +73,16 @@ public class EnemyMove : MonoBehaviour
 
         // 이동할 거리 계산
         transform.position = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
+    }
+
+
+    // 씬 뷰에서 인식 범위 시각화
+    private void OnDrawGizmosSelected()
+    {
+        float distance = (player.position - transform.position).magnitude;
+
+        if (player == null) return;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, recognizeDistance);
     }
 }
