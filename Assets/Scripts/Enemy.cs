@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
 
     [Header("공격 설정")]
     private bool canAttack = false;
-    public float attackRate = 1f;
+    public float attackRate = 0.5f;
     public int attackDamage = 20;
     private int attackType = 0;
     private float _nextAttackTime = 2f;
@@ -39,8 +39,9 @@ public class Enemy : MonoBehaviour
         enemyMove = GetComponent<EnemyMove>();
     }
 
-    public void DealDamage() { // 체력 감소 공식
+    public IEnumerator DealDamage() { // 체력 감소 공식
 
+        yield return new WaitForSeconds(0.667f);
         // 1) 공격 판정: attackPoint 위치 기준 원형 영역 내의 플레이어 찾기
         Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, playerLayers);
         foreach (Collider2D playerCollider in hitPlayer)
@@ -58,14 +59,14 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log("1차 공격 발동");
         anim.SetTrigger(name = "Attack1");
-        DealDamage();
+        StartCoroutine(DealDamage());
     }
 
     public void SecondAttack()
     {
         Debug.Log("2차 공격 발동");
         anim.SetTrigger(name = "Attack2");
-        DealDamage();
+        StartCoroutine(DealDamage());
     }
 
     public void SingleAtk()
@@ -93,8 +94,8 @@ public class Enemy : MonoBehaviour
         {
             Debug.Log("공격 조건 만족");
             enemyMove.canMove = false;
-
             attackType = Random.Range(0, 2);
+
             if (attackType == 0)
             {
                 Debug.Log("어택 타입 0");
@@ -120,7 +121,7 @@ public class Enemy : MonoBehaviour
             Debug.Log("대상이 존재하지 않습니다.");
             return;     
         }
-        if (currentHealth <= 0) //  몹 사망 시
+        else if (currentHealth <= 0) //  몹 사망 시
         {
             Debug.Log("머쉬룸 사망");
             enemyMove.canMove = false;

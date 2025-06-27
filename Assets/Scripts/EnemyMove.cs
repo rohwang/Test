@@ -43,6 +43,10 @@ public class EnemyMove : MonoBehaviour
     {
         float distance = (player.position - transform.position).magnitude;
 
+        if (player.position == null)
+        {
+            Debug.Log("플레이어의 위치 확인 불가능, 포지션이 널입니다.");
+        }
         if (distance < recognizeDistance)    //  플레이어가 인식 범위 내에 있을 때를 체크함.
         {
             recognizedPlayer = true;

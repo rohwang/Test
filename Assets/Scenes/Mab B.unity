@@ -492,7 +492,7 @@ Transform:
   m_GameObject: {fileID: 592130623}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 29.17, y: -6.14, z: 0}
+  m_LocalPosition: {x: 29.19, y: -6.32, z: 0}
   m_LocalScale: {x: 4.789429, y: 5.410725, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -804,7 +804,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   jumpForce: 18
-  dashForce: 10
+  dashForce: 24
   dashTime: 0.2
   dashCoolDown: 1
   tr: {fileID: 791596975}
@@ -1189,9 +1189,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canMove: 1
   player: {fileID: 791596967}
-  transformplayer: {fileID: 791596967}
-  recognizedPlayer: 1
   anim: {fileID: 850173262}
+  recognizeDistance: 10
   moveSpeed: 3
 --- !u!95 &850173262
 Animator:
@@ -1227,7 +1226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c95ffd049aab0140975f2cbc1431e5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRate: 2
+  attackRate: 0.5
   attackDamage: 20
   attackPoint: {fileID: 1759405710}
   attackRange: 0.3
@@ -1788,22 +1787,22 @@ CompositeCollider2D:
         Y: -33953628
   - m_Collider: {fileID: 592130624}
     m_ColliderPaths:
-    - - X: 315647136
-        Y: -34346368
-      - X: 267752864
-        Y: -34346368
-      - X: 267752864
-        Y: -88453616
-      - X: 315647136
-        Y: -88453616
+    - - X: 315847136
+        Y: -36146372
+      - X: 267952864
+        Y: -36146372
+      - X: 267952864
+        Y: -90253624
+      - X: 315847136
+        Y: -90253624
   m_CompositePaths:
     m_Paths:
     - - {x: 29.542803, y: -9.915065}
-      - {x: 29.542862, y: -8.845362}
-      - {x: 31.564714, y: -8.845332}
-      - {x: 31.564686, y: -3.4346368}
-      - {x: 26.775288, y: -3.4346662}
-      - {x: 26.775257, y: -8.204936}
+      - {x: 29.542862, y: -9.025363}
+      - {x: 31.584715, y: -9.025332}
+      - {x: 31.584684, y: -3.6146371}
+      - {x: 26.795286, y: -3.6146665}
+      - {x: 26.795258, y: -8.204936}
       - {x: -4.0552855, y: -8.204906}
       - {x: -4.055256, y: -4.1472735}
       - {x: -1.269413, y: -4.1472445}
