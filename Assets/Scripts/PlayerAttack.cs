@@ -16,15 +16,17 @@ public class PlayerAttack : MonoBehaviour
     public Transform attackPoint;
     public float attackRange = 0.5f;
     public LayerMask enemyLayers;
-
     private float _nextAttackTime = 0f;
+
+    [SerializeField]
     private Animator anim;
 
-    public UnityEvent OnHpChanged;
 
     [Header("체력 설정")]
     public float MaxHp = 100;
     public float CurHp = 100;
+
+    public UnityEvent OnHpChanged;
 
     public float GetMaxHp()
     {

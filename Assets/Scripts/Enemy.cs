@@ -5,32 +5,32 @@ using UnityEngine.Serialization;
 
 public class Enemy : MonoBehaviour
 {
-
-    [Header("공격 설정")]
-    private bool canAttack = false;
-    public float attackRate = 0.5f;
-    public int attackDamage = 20;
-    private int attackType = 0;
-    private float _nextAttackTime = 2f;
-
-    [Header("공격 방향")]
+    [Header("참조 설정")]
+    public PlayerAttack playeratk;
     public Transform attackPoint;
-    public float attackRange = 0.1f;
     public LayerMask playerLayers;
 
-    private EnemyMove enemyMove;
-    public int maxHealth = 50;
-    
-    [SerializeField]
-    private int currentHealth;
-
-    [SerializeField]
+    public EnemyMove enemyMove;
     private Animator anim;
 
+    [Header("공격 설정")]
+    public float attackRate = 0.5f;
+    public int attackDamage = 20;
+    public float _nextAttackTime = 2f;
 
-    public PlayerAttack playeratk;
-
+    private int attackType = 0;
+    private bool canAttack = false;
     private bool IsPlayerCloseEnough = false;
+
+    [Header("공격 범위")]
+    public float attackRange = 0.3f;
+
+
+    [Header("체력 설정")]
+    public int maxHealth = 50;
+    public int currentHealth;
+
+
 
     private void Awake()
     {
@@ -41,7 +41,7 @@ public class Enemy : MonoBehaviour
 
     public IEnumerator DealDamage() { // 체력 감소 공식
 
-        yield return new WaitForSeconds(0.667f);
+
         // 1) 공격 판정: attackPoint 위치 기준 원형 영역 내의 플레이어 찾기
         Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, playerLayers);
         foreach (Collider2D playerCollider in hitPlayer)
@@ -49,9 +49,14 @@ public class Enemy : MonoBehaviour
             // use tryGetComponent to avoid null reference exception
             if (playerCollider.TryGetComponent<PlayerAttack>(out PlayerAttack player) && player != null)
             {
-                // 플레이어 피격 시
-                playeratk.CurHp = playeratk.CurHp - attackDamage;
+                yield return new WaitForSeconds(0.667f);
+                    if (playerCollider.TryGetComponent<PlayerAttack>(out player) && player != null)
+                    {
+                    // 플레이어 피격 시
+                    playeratk.CurHp = playeratk.CurHp - attackDamage;
+                    }
             }
+
         }
     }
 

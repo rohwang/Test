@@ -856,6 +856,8 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 8192
+  MaxHp: 100
+  CurHp: 100
   OnHpChanged:
     m_PersistentCalls:
       m_Calls:
@@ -871,8 +873,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  MaxHp: 100
-  CurHp: 100
 --- !u!95 &791596971
 Animator:
   serializedVersion: 7
@@ -1226,17 +1226,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c95ffd049aab0140975f2cbc1431e5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRate: 0.5
-  attackDamage: 20
+  playeratk: {fileID: 791596970}
   attackPoint: {fileID: 1759405710}
-  attackRange: 0.3
   playerLayers:
     serializedVersion: 2
     m_Bits: 2048
+  enemyMove: {fileID: 0}
+  attackRate: 0.5
+  attackDamage: 20
+  _nextAttackTime: 2
+  attackRange: 0.3
   maxHealth: 50
   currentHealth: 0
-  anim: {fileID: 850173262}
-  playeratk: {fileID: 791596970}
 --- !u!70 &850173264
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

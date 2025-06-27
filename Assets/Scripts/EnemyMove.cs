@@ -2,18 +2,16 @@ using UnityEngine;
 
 public class EnemyMove : MonoBehaviour
 {
-    public bool canMove = true;
-
     public Transform player;
-    [SerializeField] private Animator anim;
+    private Animator anim;
 
     [Header("인식 설정")]
     public float recognizeDistance = 10;
     private bool recognizedPlayer; //  플레이어가 인식되었는가
 
-
     [Header("이동 설정")]
     public float moveSpeed = 1f;
+    public bool canMove = true;
 
 
     private void Awake()

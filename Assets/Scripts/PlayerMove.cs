@@ -48,8 +48,7 @@ public class PlayerMove : MonoBehaviour
         {
             return;
         }
-
-         Move();
+        Move();
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
             StartCoroutine(Dash());
@@ -119,13 +118,13 @@ public class PlayerMove : MonoBehaviour
         rb.gravityScale = 0f;                          //   대쉬 중에는 중력의 영향을 받지 않는다.
 
         {
-            if(watchDirection == 0) //  우측을 볼 때
+            if(watchDirection == 0 || watchDirection == -180) //  우측을 볼 때
             {
             rb.linearVelocity = new Vector2(transform.localScale.x * dashForce, 0f);
             }
-            else if(watchDirection < 0) //  좌측을 볼 때
+            else //  좌측을 볼 때
             {
-            rb.linearVelocity = new Vector2(transform.localScale.x * dashForce * -1, 0f);
+                rb.linearVelocity = new Vector2(-transform.localScale.x * dashForce, 0f);
             }
         }
 
