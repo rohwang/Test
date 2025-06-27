@@ -108,22 +108,34 @@ public class PlayerMove : MonoBehaviour
 
     private IEnumerator Dash()
     {
-        canDash = false;
-        IsDashing = true;
+        float watchDirection = transform.rotation.y;
 
-        col.enabled = false;
+        canDash = false;                               //  대쉬 중 대쉬 불가능
+        IsDashing = true;                              //   대쉬 도중이다.
+
+        col.enabled = false;                           // 무적 시간 시작 
 
         float originalGravity = rb.gravityScale;
-        rb.gravityScale = 0f;
-        rb.linearVelocity = new Vector2(transform.localScale.x * dashForce, 0f);
+        rb.gravityScale = 0f;                          //   대쉬 중에는 중력의 영향을 받지 않는다.
+
+        {
+            if(watchDirection == 0) //  우측을 볼 때
+            {
+            rb.linearVelocity = new Vector2(transform.localScale.x * dashForce, 0f);
+            }
+            else if(watchDirection < 0) //  좌측을 볼 때
+            {
+            rb.linearVelocity = new Vector2(transform.localScale.x * dashForce * -1, 0f);
+            }
+        }
 
         tr.emitting = true;
         yield return new WaitForSeconds(dashTime);
         tr.emitting = false;
 
-        col.enabled = true;
+        col.enabled = true;                             //  무적 시간 해제
 
-        rb.gravityScale = originalGravity;
+        rb.gravityScale = originalGravity;              // 중력 영향 시작
         IsDashing = false;
         yield return new WaitForSeconds(dashCoolDown);
         canDash = true;

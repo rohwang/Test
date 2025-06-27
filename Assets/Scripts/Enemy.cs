@@ -47,13 +47,8 @@ public class Enemy : MonoBehaviour
             // use tryGetComponent to avoid null reference exception
             if (playerCollider.TryGetComponent<PlayerAttack>(out PlayerAttack player) && player != null)
             {
-                IsPlayerCloseEnough = true;
                 // 플레이어 피격 시
                 playeratk.CurHp = playeratk.CurHp - attackDamage;
-            }
-            else
-            {
-                IsPlayerCloseEnough = false;
             }
         }
     }
@@ -93,16 +88,21 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+
         if (currentHealth <= 0) //  몹 사망 시
         {
             Debug.Log("머쉬룸 사망");
             enemyMove.canMove = false;
         }
 
+        CheckPlayerTransform();
+
         if (Time.time >= _nextAttackTime && IsPlayerCloseEnough)
         {
             Debug.Log("공격 조건 만족");
+
             enemyMove.canMove = false;
+
             attackType = Random.Range(0, 2);
             if (attackType == 0)
             {
@@ -115,10 +115,29 @@ public class Enemy : MonoBehaviour
                 ComboAtk();
             }
             _nextAttackTime = Time.time + 1f / attackRate;
+
             enemyMove.canMove = true;
         }
     }
 
+    public void CheckPlayerTransform()
+    {
+
+        // 1) 공격 판정: attackPoint 위치 기준 원형 영역 내의 플레이어 찾기
+        Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, playerLayers);
+        foreach (Collider2D playerCollider in hitPlayer)
+        {
+            // use tryGetComponent to avoid null reference exception
+            if (playerCollider.TryGetComponent<PlayerAttack>(out PlayerAttack player) && player != null)
+            {
+                IsPlayerCloseEnough = true;
+            }
+            else
+            {
+                IsPlayerCloseEnough = false;
+            }
+        }
+    }
     public void TakeDamage(int dmg)
     {
         enemyMove.canMove = false;
