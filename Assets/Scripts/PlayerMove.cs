@@ -22,7 +22,7 @@ public class PlayerMove : MonoBehaviour
 
     [Header("대쉬 설정")]
     public float dashForce = 24f;        //  대쉬 힘
-    public float dashTime = 0.2f;           //  대쉬 지속 시간
+    public float dashTime = 0.4f;           //  대쉬 지속 시간
     public float dashCoolDown = 1f;       //  대쉬 쿨다운
     private bool canDash = true;
     private bool IsDashing;

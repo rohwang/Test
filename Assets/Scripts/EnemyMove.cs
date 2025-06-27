@@ -7,6 +7,7 @@ public class EnemyMove : MonoBehaviour
     public Transform player;
     public Transform transformplayer;
 
+    [SerializeField] private bool recognizedPlayer; //  플레이어가 인식되었는가
     private Animator anim;
     public float moveSpeed = 1f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -18,9 +19,33 @@ public class EnemyMove : MonoBehaviour
     }
     void Update()
     {
+        RecognizePlayer();
+
         // 플레이어의 위치를 향해 이동
-        if (canMove) {
+        if (canMove && player != null && recognizedPlayer) {
             MoveTowardsPlayer();
+        }
+        else if (player == null)
+        {
+            Debug.Log("플레이어의 존재가 감지되지 않음");
+        }
+        else if (!recognizedPlayer)
+        {
+            Debug.Log("플레이어가 인식 범위 바깥에 있음");
+        }
+    }
+
+    private void RecognizePlayer () //  플레이어가 인식 범위 내에 있는지 확인합니다.
+    {
+        float distance = (player.position - transform.position).magnitude;
+
+        if (distance < 10)    //  플레이어가 인식 범위 내에 있을 때를 체크함.
+        {
+            recognizedPlayer = true;
+        }
+        else
+        {
+            recognizedPlayer = false;
         }
     }
 

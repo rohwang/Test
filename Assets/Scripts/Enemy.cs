@@ -7,13 +7,14 @@ public class Enemy : MonoBehaviour
 {
 
     [Header("공격 설정")]
-    public float attackRate = 2f;
+    private bool canAttack = false;
+    public float attackRate = 4f;
     public int attackDamage = 20;
     private int attackType = 0;
 
     [Header("공격 방향")]
     public Transform attackPoint;
-    public float attackRange = 0.3f;
+    public float attackRange = 0.1f;
     public LayerMask playerLayers;
 
     private EnemyMove enemyMove;
@@ -87,7 +88,11 @@ public class Enemy : MonoBehaviour
     }
 
     private void Update()
-    {
+    {   
+        if(enemyMove.canMove)
+        {
+            canAttack = false;
+        }
 
         if (currentHealth <= 0) //  몹 사망 시
         {
@@ -97,7 +102,7 @@ public class Enemy : MonoBehaviour
 
         CheckPlayerTransform();
 
-        if (Time.time >= _nextAttackTime && IsPlayerCloseEnough)
+        if (Time.time >= _nextAttackTime && IsPlayerCloseEnough && canAttack)
         {
             Debug.Log("공격 조건 만족");
 
@@ -131,10 +136,12 @@ public class Enemy : MonoBehaviour
             if (playerCollider.TryGetComponent<PlayerAttack>(out PlayerAttack player) && player != null)
             {
                 IsPlayerCloseEnough = true;
+                canAttack = true;
             }
             else
             {
                 IsPlayerCloseEnough = false;
+                canAttack= false;
             }
         }
     }
