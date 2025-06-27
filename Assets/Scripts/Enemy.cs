@@ -14,9 +14,11 @@ public class Enemy : MonoBehaviour
     private Animator anim;
 
     [Header("공격 설정")]
+    public bool isAttack = false;
     public float attackRate = 0.5f;
     public int attackDamage = 20;
     public float _nextAttackTime = 2f;
+    public float attackTime = 0.667f;
 
     private int attackType = 0;
     private bool canAttack = false;
@@ -40,8 +42,6 @@ public class Enemy : MonoBehaviour
     }
 
     public IEnumerator DealDamage() { // 체력 감소 공식
-
-
         // 1) 공격 판정: attackPoint 위치 기준 원형 영역 내의 플레이어 찾기
         Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, playerLayers);
         foreach (Collider2D playerCollider in hitPlayer)
@@ -49,15 +49,15 @@ public class Enemy : MonoBehaviour
             // use tryGetComponent to avoid null reference exception
             if (playerCollider.TryGetComponent<PlayerAttack>(out PlayerAttack player) && player != null)
             {
-                yield return new WaitForSeconds(0.667f);
+                yield return new WaitForSeconds(attackTime);
                     if (playerCollider.TryGetComponent<PlayerAttack>(out player) && player != null)
                     {
                     // 플레이어 피격 시
                     playeratk.CurHp = playeratk.CurHp - attackDamage;
                     }
             }
-
         }
+        yield return new WaitForSeconds(0.5f);
     }
 
     public void FirstAttack()
@@ -97,6 +97,7 @@ public class Enemy : MonoBehaviour
     {
         if (Time.time >= _nextAttackTime && IsPlayerCloseEnough && canAttack)
         {
+            isAttack = true;
             Debug.Log("공격 조건 만족");
             enemyMove.canMove = false;
             attackType = Random.Range(0, 2);
@@ -114,6 +115,7 @@ public class Enemy : MonoBehaviour
             _nextAttackTime = Time.time + 1f / attackRate;
             yield return new WaitForSeconds(1f);
             enemyMove.canMove = true;
+            isAttack = false;
         }
 
     }
@@ -142,7 +144,6 @@ public class Enemy : MonoBehaviour
 
     public void CheckPlayerTransform()
     {
-
         // 1) 공격 판정: attackPoint 위치 기준 원형 영역 내의 플레이어 찾기
         Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, playerLayers);
         foreach (Collider2D playerCollider in hitPlayer)

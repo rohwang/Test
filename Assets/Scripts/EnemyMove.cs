@@ -4,6 +4,9 @@ public class EnemyMove : MonoBehaviour
 {
     public Transform player;
     private Animator anim;
+    private Rigidbody2D rb;
+    private float currentSpeed;
+    private Enemy enemy;
 
     [Header("인식 설정")]
     public float recognizeDistance = 10;
@@ -16,15 +19,30 @@ public class EnemyMove : MonoBehaviour
 
     private void Awake()
     {
+        enemy = GetComponent<Enemy>();
+        rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         canMove = true;
+
+        currentSpeed = rb.linearVelocity.x;
     }
     void Update()
     {
         RecognizePlayer();
 
+        if(currentSpeed == 0)
+        {
+            anim.SetBool(name = "Run", false);
+            anim.SetTrigger(name = "Idle");
+        }
+        else if(currentSpeed != 0)
+        {
+            anim.SetBool(name="Run", true);
+        }
+
         // 플레이어의 위치를 향해 이동
-        if (canMove && player != null && recognizedPlayer) {
+        if (canMove && player != null && recognizedPlayer && !enemy.isAttack)
+        {
             MoveTowardsPlayer();
         }
         else if (player == null)
@@ -49,7 +67,7 @@ public class EnemyMove : MonoBehaviour
         {
             recognizedPlayer = true;
         }
-        else
+        else if (distance >= recognizeDistance)
         {
             recognizedPlayer = false;
         }
@@ -70,7 +88,6 @@ public class EnemyMove : MonoBehaviour
         {
             transform.rotation = Quaternion.Euler(rot.x, 0, rot.z);
         }
-        anim.SetBool("Run", true);
 
 
         // 이동할 거리 계산

@@ -197,9 +197,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   enemyMove: {fileID: 0}
+  isAttack: 0
   attackRate: 0.5
   attackDamage: 20
   _nextAttackTime: 2
+  attackTime: 0.667
   attackRange: 0.3
   maxHealth: 50
   currentHealth: 0
@@ -1450,10 +1452,12 @@ MonoBehaviour:
   playerLayers:
     serializedVersion: 2
     m_Bits: 2048
-  enemyMove: {fileID: 0}
+  enemyMove: {fileID: 850173261}
+  isAttack: 0
   attackRate: 0.5
   attackDamage: 20
   _nextAttackTime: 2
+  attackTime: 0.667
   attackRange: 0.3
   maxHealth: 50
   currentHealth: 0
