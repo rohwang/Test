@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
     private bool IsPlayerCloseEnough = false;
 
     [Header("공격 범위")]
-    public float attackRange = 0.3f;
+    public float attackRange = 0.75f;
 
 
     [Header("체력 설정")]
@@ -41,22 +41,24 @@ public class Enemy : MonoBehaviour
         enemyMove = GetComponent<EnemyMove>();
     }
 
-    public IEnumerator DealDamage() { // 체력 감소 공식
-        // 1) 공격 판정: attackPoint 위치 기준 원형 영역 내의 플레이어 찾기
+    public IEnumerator DealDamage()
+    {
+        // 공격 준비 시간 (예: 모션 선딜레이)
+        yield return new WaitForSeconds(attackTime);
+
+        // 실제 공격 판정: 이 시점에서 다시 범위 체크
         Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, playerLayers);
+
         foreach (Collider2D playerCollider in hitPlayer)
         {
-            // use tryGetComponent to avoid null reference exception
             if (playerCollider.TryGetComponent<PlayerAttack>(out PlayerAttack player) && player != null)
             {
-                yield return new WaitForSeconds(attackTime);
-                    if (playerCollider.TryGetComponent<PlayerAttack>(out player) && player != null)
-                    {
-                    // 플레이어 피격 시
-                    playeratk.CurHp = playeratk.CurHp - attackDamage;
-                    }
+                // 플레이어 피격 시 체력 감소
+                playeratk.CurHp -= attackDamage;
             }
         }
+
+        // 공격 후 딜레이
         yield return new WaitForSeconds(0.5f);
     }
 

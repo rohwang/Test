@@ -16,7 +16,7 @@ public class Click : MonoBehaviour
     public IEnumerator WhenClick()
     {
         image.tintColor = Color.black;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         image.tintColor = Color.white;
     }
 }

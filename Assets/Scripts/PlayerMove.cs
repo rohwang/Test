@@ -83,15 +83,6 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    // 에디터에서 지면 체크 영역을 시각화
-    void OnDrawGizmosSelected()
-    {
-        if (groundCheck != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-        }
-    }
 
     private void Jump()
     {
