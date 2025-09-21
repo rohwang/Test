@@ -15,7 +15,7 @@ public class FloorAttack : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         {
-            transform.position = new Vector3(playerTransform.position.x, playerTransform.position.y);
+            // transform.position = new Vector3(playerTransform.position.x, playerTransform.position.y);
         }
     }
 
