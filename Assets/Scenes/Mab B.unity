@@ -1117,12 +1117,6 @@ MonoBehaviour:
   dashCoolDown: 1
   tr: {fileID: 791596975}
   col: {fileID: 791596972}
-  PlayerLayer:
-    serializedVersion: 2
-    m_Bits: 3
-  EnemyLayer:
-    serializedVersion: 2
-    m_Bits: 5
 --- !u!50 &791596969
 Rigidbody2D:
   serializedVersion: 5
@@ -1166,7 +1160,7 @@ MonoBehaviour:
   attackRate: 2
   attackDamage: 20
   attackPoint: {fileID: 844155017}
-  attackRange: 0.5
+  attackRange: 0.75
   enemyLayers:
     serializedVersion: 2
     m_Bits: 8192

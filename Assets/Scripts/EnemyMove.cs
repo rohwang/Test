@@ -53,6 +53,10 @@ public class EnemyMove : MonoBehaviour
         {
             Debug.Log("플레이어가 인식 범위 바깥에 있음");
         }
+        else if (!canMove)
+        {
+
+        }
     }
 
     private void RecognizePlayer () //  플레이어가 인식 범위 내에 있는지 확인합니다.

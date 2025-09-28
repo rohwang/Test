@@ -54,7 +54,10 @@ public class Enemy : MonoBehaviour
             if (playerCollider.TryGetComponent<PlayerAttack>(out PlayerAttack player) && player != null)
             {
                 // 플레이어 피격 시 체력 감소
-                playeratk.CurHp -= attackDamage;
+                if (canAttack)
+                {
+                    playeratk.CurHp -= attackDamage;
+                }
             }
         }
 
@@ -166,6 +169,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int dmg)
     {
         enemyMove.canMove = false;
+        canAttack = false;
         currentHealth -= dmg;
         anim.SetBool(name="Run", false);
 
@@ -176,7 +180,7 @@ public class Enemy : MonoBehaviour
         else
         {
             anim.SetTrigger(name = "Hit");
-            Invoke(name = "CanMoveTrue", 1f);
+            Invoke(name = "CanMoveTrue", 1.3f);
         }
 
     }
@@ -189,6 +193,7 @@ public class Enemy : MonoBehaviour
     private void CanMoveTrue()
     {
         enemyMove.canMove = true;
+        canAttack = true;
     }
 
     private void DieAnimation()

@@ -74,8 +74,6 @@ public class PlayerAttack : MonoBehaviour
                 enemy.TakeDamage(attackDamage);
             }
         }
-
-
         // 가정
         OnHpChanged.Invoke();
     }
