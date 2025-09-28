@@ -103,7 +103,9 @@ public class PlayerMove : MonoBehaviour
         canDash = false;                               //  대쉬 중 대쉬 불가능
         IsDashing = true;                              //   대쉬 도중이다.
 
-        col.enabled = false;                           // 무적 시간 시작 
+        // col.enabled = false;
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), true);    // 적 통과 기능 추가
+        // 무적 시간 추가 고려
 
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;                          //   대쉬 중에는 중력의 영향을 받지 않는다.
@@ -111,7 +113,7 @@ public class PlayerMove : MonoBehaviour
         {
             if(watchDirection == 0 || watchDirection == -180) //  우측을 볼 때
             {
-            rb.linearVelocity = new Vector2(transform.localScale.x * dashForce, 0f);
+                rb.linearVelocity = new Vector2(transform.localScale.x * dashForce, 0f);
             }
             else //  좌측을 볼 때
             {
@@ -123,7 +125,8 @@ public class PlayerMove : MonoBehaviour
         yield return new WaitForSeconds(dashTime);
         tr.emitting = false;
 
-        col.enabled = true;                             //  무적 시간 해제
+        // col.enabled = true;
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), false);    //  적 통과 해제
 
         rb.gravityScale = originalGravity;              // 중력 영향 시작
         IsDashing = false;

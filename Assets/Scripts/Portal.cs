@@ -16,7 +16,8 @@ public class Portal : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Player"))
         {
-            SceneManager.LoadScene(data.GetRandomScene());
+            // SceneManager.LoadScene(data.GetRandomScene());
+            SceneManager.LoadScene("Mab B");
         }
     }
 }

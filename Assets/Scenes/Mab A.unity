@@ -809,6 +809,12 @@ MonoBehaviour:
   dashCoolDown: 1
   tr: {fileID: 791596975}
   col: {fileID: 791596972}
+  PlayerLayer:
+    serializedVersion: 2
+    m_Bits: 3
+  EnemyLayer:
+    serializedVersion: 2
+    m_Bits: 5
 --- !u!50 &791596969
 Rigidbody2D:
   serializedVersion: 5
@@ -856,6 +862,7 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 8192
+  anim: {fileID: 0}
   MaxHp: 100
   CurHp: 100
   OnHpChanged:
@@ -1187,11 +1194,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f0f6d0037d73124faa8f753ffbe6491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canMove: 1
   player: {fileID: 791596967}
-  anim: {fileID: 850173262}
   recognizeDistance: 10
   moveSpeed: 3
+  canMove: 1
 --- !u!95 &850173262
 Animator:
   serializedVersion: 7
@@ -1232,9 +1238,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   enemyMove: {fileID: 0}
+  isAttack: 0
   attackRate: 0.5
   attackDamage: 20
   _nextAttackTime: 2
+  attackTime: 0.667
   attackRange: 0.3
   maxHealth: 50
   currentHealth: 0

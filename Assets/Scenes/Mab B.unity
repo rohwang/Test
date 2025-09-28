@@ -267,7 +267,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!212 &30488204
 SpriteRenderer:
@@ -1117,6 +1117,12 @@ MonoBehaviour:
   dashCoolDown: 1
   tr: {fileID: 791596975}
   col: {fileID: 791596972}
+  PlayerLayer:
+    serializedVersion: 2
+    m_Bits: 3
+  EnemyLayer:
+    serializedVersion: 2
+    m_Bits: 5
 --- !u!50 &791596969
 Rigidbody2D:
   serializedVersion: 5
@@ -1142,7 +1148,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &791596970
 MonoBehaviour:
@@ -1610,7 +1616,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!212 &850173266
 SpriteRenderer:
